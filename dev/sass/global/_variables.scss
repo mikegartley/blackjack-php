@@ -1,0 +1,48 @@
+/////////////////
+/// COLORS
+/////////////////
+
+// Site Colors
+
+$white: #ffffff !default;
+$black: #222222 !default;
+$light-grey: #f5f5f5 !default;
+$dark-grey: #515151 !default;
+$medium-grey: #e1e3e4 !default;
+$body-bg-color: $light-grey !default;
+
+// Social
+$facebook: #3c599f;
+$twitter: #32ccfe;
+$linkedin: #0085ae;
+
+/////////////////
+/// COMMON
+/////////////////
+// Grid
+$grid-columns: 12 !default;
+$grid-gutter: 3 !default;
+
+// Breakpoints
+$breakpoint-sm-mobile: 320px;
+$breakpoint-md-mobile: 400px;
+$breakpoint-lr-mobile: 640px;
+$breakpoint-sm-tablet: 768px;
+$breakpoint-md-tablet: 1024px;
+$breakpoint-sm-laptop: 1280px;
+$breakpoint-md-laptop: 1366px;
+$breakpoint-lr-laptop: 1440px;
+$breakpoint-xl: 1441px;
+
+// Fonts
+$font-family-base: 'PT Sans', sans-serif;
+$font-size-base: 100% !default;
+$line-height-base: 1.5 !default;
+$letter-spacing-base: 0 !default;
+$font-color-base: $black;
+$font-color-base-light: $white;
+$font-weight-thin: 300 !default;
+$font-weight-base: 400 !default;
+$font-weight-light-bold: 600 !default;
+$font-weight-bold: 700 !default;
+$font-weight-black: 800 !default;

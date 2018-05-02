@@ -1,0 +1,65 @@
+.lg-container {
+    @include center(1300px);
+    &.side-pad {
+        padding: 0 1rem;
+
+        @include custom-media($breakpoint-md-tablet) {
+            padding: 0 2rem;
+        }
+    }
+}
+.xl-container {
+    @include center(1440px);
+
+    &.side-pad {
+        padding: 0 1rem;
+
+        @include custom-media($breakpoint-md-tablet) {
+            padding: 0 2rem;
+        }
+    }
+}
+.md-container {
+    @include center(1000px);
+}
+
+.sm-container {
+    @include center(768px);
+
+}
+
+.row {
+    @include clearfix;
+}
+
+.alt-rows {
+    @include clearfix;
+
+    &:nth-child(even){
+        background: $light-grey;
+    }
+}
+
+@include create-columns();
+@include create-spans();
+
+
+@include custom-media($breakpoint-sm-tablet) {
+    @include create-columns(sm);
+    @include create-spans(sm);
+}
+
+@include custom-media($breakpoint-md-tablet) {
+    @include create-columns(md);
+    @include create-spans(md);
+}
+
+@include custom-media($breakpoint-sm-laptop) {
+    @include create-columns(lg);
+    @include create-spans(lg);
+}
+
+@include custom-media($breakpoint-md-laptop) {
+    @include create-columns(xl);
+    @include create-spans(xl);
+}

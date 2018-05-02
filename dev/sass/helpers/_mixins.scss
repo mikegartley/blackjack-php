@@ -1,0 +1,275 @@
+@mixin text-shadows($string: 0 2px 0 rgba(255, 255, 255, 0.25)) {
+    text-shadow: $string;
+}
+
+
+@mixin custom-media($breakpoint, $breakpointStop: 0) {
+
+    @if $breakpointStop == 0 {
+        @media only screen and (min-width: $breakpoint) {
+            @content;
+        }
+    }
+    @else {
+        @media only screen and (min-width: $breakpoint) and (max-width: $breakpointStop - 1) {
+            @content;
+        }
+    }
+}
+
+
+//Transitioning / Animation
+@mixin transitions($prop: all, $time: 1s, $ease: linear) {
+    -webkit-transition: $prop $time $ease;
+    -moz-transition: $prop $time $ease;
+    -o-transition: $prop $time $ease;
+    -ms-transition: $prop $time $ease;
+    transition: $prop $time $ease;
+}
+
+@mixin filters($type) {
+    -webkit-filter: $type;
+    -moz-filter: $type;
+    -o-filter: $type;
+    -ms-filter: $type;
+    filter: $type;
+}
+
+@mixin border-radius($radius: 5px) {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+    -o-border-radius: $radius;
+    border-radius: $radius;
+}
+
+@mixin border-radius-custom($topleft: 5px, $topright: 5px, $bottomleft: 5px, $bottomright: 5px) {
+    -webkit-border-radius: $topleft $topright $bottomright $bottomleft;
+    -moz-border-radius: $topleft $topright $bottomright $bottomleft;
+    -ms-border-radius: $topleft $topright $bottomright $bottomleft;
+    -o-border-radius: $topleft $topright $bottomright $bottomleft;
+    border-radius: $topleft $topright $bottomright $bottomleft;
+}
+
+@mixin drop-shadow($x: 0, $y: 1px, $blur: 2px, $spread: 0, $alpha: 0.25) {
+    -webkit-box-shadow: $x $y $blur $spread rgba(0, 0, 0, $alpha);
+    -moz-box-shadow: $x $y $blur $spread rgba(0, 0, 0, $alpha);
+    box-shadow: $x $y $blur $spread rgba(0, 0, 0, $alpha);
+}
+// generic transform
+@mixin transform($transforms) {
+    -moz-transform: $transforms;
+    -o-transform: $transforms;
+    -ms-transform: $transforms;
+    -webkit-transform: $transforms;
+    transform: $transforms;
+}
+
+
+@mixin angle($pseudo, $flip: false, $angle: 1.5deg) {
+    // Possible values for $pseudo are: before, after, both
+    @if $pseudo == 'before' or $pseudo == 'after' or $pseudo == 'both' {
+        position: relative;
+        z-index: 1;
+        $selector: if($pseudo == 'both', '&:before,&:after', '&:#{$pseudo}');
+
+        #{$selector} {
+            background: inherit;
+            content: '';
+            display: block;
+            height: 50%;
+            left: 0;
+            position: absolute;
+            right: 0;
+            z-index: -1;
+            -webkit-backface-visibility: hidden; // for Chrome Windows
+        }
+
+        @if $pseudo == 'before' {
+            #{$selector} {
+                top: 0;
+
+                @if $flip {
+                    transform: skewY($angle * -1);
+                    transform-origin: 0 0;
+                }
+                @else {
+                    transform: skewY($angle);
+                    transform-origin: 100% 0;
+                }
+            }
+        }
+
+        @if $pseudo == 'after' {
+            #{$selector} {
+                bottom: 0;
+
+                @if $flip {
+                    transform: skewY($angle);
+                    transform-origin: 0 100%;
+                }
+                @else {
+                    transform: skewY($angle * -1);
+                    transform-origin: 100%;
+                }
+            }
+        }
+
+        @if $pseudo == 'both' {
+            &:before {
+                top: 0;
+
+                @if $flip {
+                    transform: skewY($angle * -1);
+                    transform-origin: 0 0;
+                }
+                @else {
+                    transform: skewY($angle);
+                    transform-origin: 100% 0;
+                }
+            }
+
+            &:after {
+                bottom: 0;
+
+                @if $flip {
+                    transform: skewY($angle);
+                    transform-origin: 0 0;
+                }
+                @else {
+                    transform: skewY($angle * -1);
+                    transform-origin: 100%;
+                }
+            }
+        }
+    }
+}
+
+
+
+// rotate
+@mixin rotate ($deg) {
+    @include transform(rotate(#{$deg}deg));
+}
+
+// scale
+@mixin scale($scale) {
+    @include transform(scale($scale));
+}
+// translate
+@mixin translate ($x, $y) {
+    @include transform(translate($x, $y));
+}
+// skew
+@mixin skew ($x, $y) {
+    @include transform(skew(#{$x}deg, #{$y}deg));
+}
+//transform origin
+@mixin transform-origin ($origin) {
+    moz-transform-origin: $origin;
+    -o-transform-origin: $origin;
+    -ms-transform-origin: $origin;
+    -webkit-transform-origin: $origin;
+    transform-origin: $origin;
+}
+
+@mixin linearGradient($top, $bottom) {
+    background: $top;
+    /* Old browsers */
+    background: -moz-linear-gradient(top, $top 0%, $bottom 100%);
+    /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $top), color-stop(100%, $bottom));
+    /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, $top 0%, $bottom 100%);
+    /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, $top 0%, $bottom 100%);
+    /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, $top 0%, $bottom 100%);
+    /* IE10+ */
+    background: linear-gradient(to bottom, $top 0%, $bottom 100%);
+    /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#000000',GradientType=0 );
+    /* IE6-9 */
+}
+
+@mixin gradient-radial($inner-color: #555, $outer-color: #333, $img: "bg-texture.png") {
+    background: -webkit-radial-gradient(circle, $inner-color, $outer-color), url("#{$img}") top center;
+    background: radial-gradient(circle, $inner-color, $outer-color), url("#{$img}") top center;
+}
+
+
+///////////////////////////////
+/// GRID
+///////////////////////////////
+//@if $i == 3 {
+//.col-#{$size}#{$i} {
+//@include column($i/$grid-columns, $cycle: 4);
+//}
+//}
+//@else if $i == 4 {
+//.col-#{$size}#{$i} {
+//@include column($i/$grid-columns, $cycle: 3);
+//}
+//}
+
+
+
+@mixin create-columns($size: null, $cycle: 0) {
+    @if ($size) {
+        $size: $size + '-';
+    }
+
+    @for $i from 1 through $grid-columns {
+
+        @if $i == 6 {
+            .col-#{$size}#{$i} {
+                @include column($i/$grid-columns, $cycle: 2);
+            }
+        }
+        @else {
+            .col-#{$size}#{$i} {
+                @include column($i/$grid-columns);
+            }
+        }
+
+        .col-#{$size}offset-#{$i} {
+            @include offset($i/$grid-columns);
+        }
+
+        .col-#{$size}push-#{$i} {
+            @include push($i/$grid-columns);
+        }
+
+        .col-#{$size}pull-#{$i} {
+            @include pull($i/$grid-columns);
+        }
+    }
+}
+
+@mixin push($ratio) {
+    left: column-width($ratio);
+}
+
+@mixin pull($ratio) {
+    right: column-width($ratio);
+}
+
+@mixin offset($ratio) {
+    margin-left: column-width($ratio);
+}
+
+@function column-width($ratio) {
+    @return unquote(($ratio * 100) + '%');
+}
+
+@mixin create-spans($size: null) {
+    @if ($size) {
+        $size: $size + '-';
+    }
+
+    @for $i from 1 through $grid-columns {
+        .span-#{$size}#{$i} {
+            @include span($i/$grid-columns);
+        }
+    }
+}

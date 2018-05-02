@@ -1,0 +1,16 @@
+.o-buttons{
+    @include border-radius(99rem);
+    background: green;
+    height: 50px;
+    width: 50px;
+    color: white;
+
+
+    &.--stand{
+        background: red;
+    }
+    &.--new{
+        background: yellow;
+        color: black;
+    }
+}
